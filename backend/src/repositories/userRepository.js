@@ -1,20 +1,20 @@
 import { User } from '../models/User.js'
+import { Op } from 'Sequelize'
 
 class UserRepository {
 
-    async findUserByName(userName) {
-        return await User.findOne({ where: { userName: userName } })
+    async findUserByNameOrEmail(userName = '', email = '') {
+        return await User.findOne({
+            where: {
+                [Op.or]:
+                    [{ userName: userName }, { email: email }]
+            }
+        })
     }
 
     async registerUser(user) {
-        const userExists = await this.findUserByName(user.userName)
-        if (!userExists) {
-            const userToSave = new User(user)
-            await userToSave.save()
-            return 'User created'
-        } else {
-            return 'User already exists'
-        }
+        const userToSave = new User(user)
+        await userToSave.save()
     }
 }
 

@@ -1,4 +1,5 @@
 import bcryptjs from "bcryptjs"
+import jwt from 'jsonwebtoken'
 import { UserRepository } from '../repositories/userRepository.js'
 const userRepository = new UserRepository()
 
@@ -8,13 +9,36 @@ class UserService {
         this.userRepository = userRepository
     }
 
-    async registerUser(userName, password) {
-        const hashedPassword = await bcryptjs.hash(password, 10)
-        const user = {
-            userName: userName,
-            password: hashedPassword
+    async registerUser(requestBody) {
+        const { userName, password, email } = requestBody
+
+        const userExists = await userRepository.findUserByNameOrEmail(userName, email)
+
+        if (!userExists) {
+            const hashedPassword = await bcryptjs.hash(password, 10)
+            const user = {
+                userName: userName,
+                password: hashedPassword,
+                email: email
+            }
+            await userRepository.registerUser(user)
+            return 'User created'
         }
-        return await userRepository.registerUser(user)
+        else {
+            return 'User name or email already in use'
+        }
+    }
+
+    async loginUser(requestBody) {
+        const { userName, email, password } = requestBody
+        const currentUser = await userRepository.findUserByNameOrEmail(userName, email)
+        if (currentUser) {
+            if (await bcryptjs.compare(password, currentUser.password)) {
+                const user = { userName: currentUser.userName, password: password }
+                return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+            }
+        } return 'Invalid credentials'
+
     }
 }
 
