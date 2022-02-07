@@ -9,8 +9,8 @@ class UserController {
 
     async registerUser(req, res) {
         try {
-            await userService.registerUser(req.body.userName, req.body.password)
-            res.status(201).json({ message: `User ${req.body.userName} created` })
+            const response = await userService.registerUser(req.body.userName, req.body.password)
+            res.status(201).send(response)
         } catch (error) {
             res.status(400).send('wrong credentials')
         }

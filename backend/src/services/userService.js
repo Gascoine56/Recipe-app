@@ -14,7 +14,7 @@ class UserService {
             userName: userName,
             password: hashedPassword
         }
-        await userRepository.registerUser(user)
+        return await userRepository.registerUser(user)
     }
 }
 
