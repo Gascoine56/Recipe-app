@@ -1,0 +1,6 @@
+node_modules
+.env
+./coverage
+coverage
+/coverage
+/backend/src/myIndex.js

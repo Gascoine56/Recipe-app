@@ -4,8 +4,10 @@
   "description": "app for creating and sharing recipes",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --exec babel-node backend/src/index.js",
+    "test": "jest"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Gascoine56/Recipe-app.git"
@@ -15,5 +17,12 @@
   "bugs": {
     "url": "https://github.com/Gascoine56/Recipe-app/issues"
   },
-  "homepage": "https://github.com/Gascoine56/Recipe-app#readme"
+  "homepage": "https://github.com/Gascoine56/Recipe-app#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "jest": "^27.5.0",
+    "nodemon": "^2.0.15"
+  }
 }
