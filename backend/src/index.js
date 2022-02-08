@@ -14,7 +14,7 @@ app.use(express.json());
 })();
 
 app.use('/user', usersRoute)
-app.use(tokenAuth.authenticateToken)
+app.use(tokenAuth.authenticateAccessToken)
 app.use('/recipes', recipesRouter)
 
 app.listen(process.env.PORT)

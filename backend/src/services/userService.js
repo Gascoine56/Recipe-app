@@ -1,5 +1,5 @@
 import bcryptjs from "bcryptjs"
-import jwt from 'jsonwebtoken'
+import { tokenAuth } from '../middlewares/tokenAuth.js'
 import { UserRepository } from '../repositories/userRepository.js'
 const userRepository = new UserRepository()
 
@@ -35,11 +35,15 @@ class UserService {
         if (currentUser) {
             if (await bcryptjs.compare(password, currentUser.password)) {
                 const user = { userName: currentUser.userName, password: password }
-                return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+                const accessToken = tokenAuth.generateAccessToken(user)
+                const refreshToken = tokenAuth.generateRefreshToken(user)
+                return { accessToken: accessToken, refreshToken: refreshToken }
             }
         } return 'Invalid credentials'
 
     }
+
+
 }
 
 export { UserService }
