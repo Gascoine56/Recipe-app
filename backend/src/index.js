@@ -8,11 +8,11 @@ import { recipesRouter } from './routes/recipes.js'
 const app = express();
 
 app.use(express.json());
-
 (async () => {
     await db.sync({ alter: true });
 })();
 
+app.use('/uploads', express.static('uploads/'))
 app.use('/user', usersRoute)
 app.use(tokenAuth.authenticateAccessToken)
 app.use('/recipes', recipesRouter)
