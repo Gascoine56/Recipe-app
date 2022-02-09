@@ -34,7 +34,7 @@ class UserService {
         const currentUser = await userRepository.findUserByNameOrEmail(userName, email)
         if (currentUser) {
             if (await bcryptjs.compare(password, currentUser.password)) {
-                const user = { userName: currentUser.userName, password: password }
+                const user = {userId:currentUser.id, userName: currentUser.userName, password: password }
                 const accessToken = tokenAuth.generateAccessToken(user)
                 const refreshToken = tokenAuth.generateRefreshToken(user)
                 return { accessToken: accessToken, refreshToken: refreshToken }

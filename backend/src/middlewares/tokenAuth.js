@@ -10,6 +10,8 @@ class TokenAuth {
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) return res.sendStatus(403)
+            console.log(user);
+            req.userId = user.userId 
             req.userName = user.userName
             req.password = user.password
             next()
@@ -23,15 +25,15 @@ class TokenAuth {
 
         jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
             if (err) return res.sendStatus(403)
-            req.body.userName = user.userName
-            req.body.password = user.password 
+            req.userId = user.userId 
+            req.userName = user.userName
+            req.password = user.password
             next()
         })        
     }
 
 
     generateAccessToken(user) {
-        console.log(user);
         return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '60m' })
     }
 

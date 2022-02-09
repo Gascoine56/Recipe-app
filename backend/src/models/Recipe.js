@@ -1,11 +1,13 @@
 import sequelize from "sequelize";
-const { STRING } = sequelize;
+const { STRING, DOUBLE } = sequelize;
 import db from "../../config/database.js";
 
 const Recipe = db.define('recipe', {
-    name: STRING,
+    recipeName: STRING,
     instructions: STRING,
-    recipeImage: STRING
+    recipeImagePath: STRING,
+    createdAt: DOUBLE,
+    authorName: STRING
 },
     { timestamps: false })
 
