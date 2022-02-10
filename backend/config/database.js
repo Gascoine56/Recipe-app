@@ -10,6 +10,7 @@ const db = new Sequelize(process.env.DATABASE_NAME, process.env.DB_USERNAME, pro
         acquire: 30000,
         idle: 10000,
     },
+    logging: false
 })
 
 export default db

@@ -1,7 +1,8 @@
-import {recipeRepository} from '../repositories/recipeRepository.js'
+import { recipeRepository } from '../repositories/recipeRepository.js'
 
-class RecipeService { 
-    async createRecipe(recipeName, instructions, imagePath, authorName, authorId){
+class RecipeService {
+
+    async createRecipe(recipeName, instructions, imagePath, authorName, authorId) {
         const recipeToSave = {
             recipeName: recipeName,
             instructions: instructions,

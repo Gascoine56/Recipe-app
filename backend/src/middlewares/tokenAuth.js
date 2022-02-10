@@ -10,7 +10,6 @@ class TokenAuth {
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) return res.sendStatus(403)
-            console.log(user);
             req.userId = user.userId 
             req.userName = user.userName
             req.password = user.password
