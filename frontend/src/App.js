@@ -1,9 +1,11 @@
 import './App.css';
+import Navbar from './Navbar';
+import Registration from './User/Registration'
 
 function App() {
   return (
     <div className="App">
-      Recipes
+      <Registration/>
     </div>
   );
 }
