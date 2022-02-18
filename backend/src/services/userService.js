@@ -25,7 +25,7 @@ class UserService {
             return 'User created'
         }
         else {
-            return 'User name or email already in use'
+            throw new Error()
         }
     }
 

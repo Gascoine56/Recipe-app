@@ -44,7 +44,7 @@ const Registration = () => {
     useEffect(() => {
         setEmail(email);
         setValidEmail(EMAIL_REGEX.test(email))
-    },[email])
+    }, [email])
 
     useEffect(() => {
         setValidPassword(PASSWORD_REGEX.test(password));
@@ -57,20 +57,24 @@ const Registration = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!USER_REGEX.test(userName) || !PASSWORD_REGEX.test(password)) {
+        if (!USER_REGEX.test(userName) || !PASSWORD_REGEX.test(password) || !EMAIL_REGEX.test(email)) {
             setErrorMessage("Invalid entry")
             return
         }
         try {
-            const response = await axios.post(REGISTER_URL,
+            await axios.post(REGISTER_URL,
                 { userName, password, email },
             )
-            console.log(response.data);
             setSuccess(true)
         } catch (error) {
-            console.log(error);
+            if (!error?.response) {
+                setErrorMessage('No server response')
+            } else if (error.response?.status === 400) {
+                setErrorMessage('Username or email already in use ')
+            } else {
+                setErrorMessage('Registration failed')
+            }
         }
-
     }
 
     return (
@@ -121,7 +125,7 @@ const Registration = () => {
                             type="email"
                             id="email"
                             required
-                            onChange={(e) => {setEmail(e.target.value)}}
+                            onChange={(e) => { setEmail(e.target.value) }}
                         />
 
                         <label htmlFor="password">
@@ -142,7 +146,6 @@ const Registration = () => {
                             Password must be 8-24 characters long,<br />
                             must contain lowercase letter, uppercase letter,<br />
                             number and a special character (!@#$%).
-
                         </p>
 
                         <label htmlFor="confirmpassword">
@@ -160,14 +163,12 @@ const Registration = () => {
                         />
                         <p className={matchFocus && !validMatch ? "instructions" : "nodisplay"} >
                             <FontAwesomeIcon icon={faInfoCircle} />
-                            Password must match
-
+                            Passwords must match
                         </p>
 
                         <button disabled={!validName || !validPassword || !validMatch ? true : false}>
                             Register
                         </button>
-
                     </form>
                 </section>)}
         </>
