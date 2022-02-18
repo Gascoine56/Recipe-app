@@ -1,5 +1,6 @@
 import env from "dotenv/config"
 import express from 'express';
+import cors from 'cors'
 import db from '../config/database.js'
 import { tokenAuth } from './middlewares/tokenAuth.js'
 import { usersRoute } from './routes/user.js'
@@ -12,6 +13,8 @@ app.use(express.json());
 (async () => {
     await db.sync({ alter: true });
 })();
+
+app.use(cors())
 
 app.use('/uploads', express.static('uploads/'))
 
