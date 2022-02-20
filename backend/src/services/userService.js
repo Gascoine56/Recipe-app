@@ -30,8 +30,8 @@ class UserService {
     }
 
     async loginUser(requestBody) {
-        const { userName, email, password } = requestBody
-        const currentUser = await userRepository.findUserByNameOrEmail(userName, email)
+        const { userName, password } = requestBody
+        const currentUser = await userRepository.findUserByName(userName)
         if (currentUser) {
             if (await bcryptjs.compare(password, currentUser.password)) {
                 const user = {userId:currentUser.id, userName: currentUser.userName, password: password }
@@ -39,7 +39,7 @@ class UserService {
                 const refreshToken = tokenAuth.generateRefreshToken(user)
                 return { accessToken: accessToken, refreshToken: refreshToken }
             }
-        } return 'Invalid credentials'
+        } throw Error('Invalid credentials')
 
     }
 

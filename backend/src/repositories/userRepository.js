@@ -12,6 +12,12 @@ class UserRepository {
         })
     }
 
+    async findUserByName(userName){
+        return await User.findOne({
+            where: {userName : userName}
+        })
+    }
+
     async registerUser(user) {
         const userToSave = new User(user)
         await userToSave.save()

@@ -23,14 +23,14 @@ class UserController {
 
     async loginUser(req, res) {
         try {
-            if (req.body.userName || req.body.email) {
+            if (req.body.userName && req.body.password) {
                 const response = await userService.loginUser(req.body)
                 res.status(200).send(response)
             } else {
                 res.status(400).send('One or more required fields missing')
             }
         } catch (error) {
-            res.status(400).send('Missing credentials')
+            res.status(401).send('Missing credentials')
         }
     }
 
