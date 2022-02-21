@@ -1,15 +1,19 @@
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import useAuth from "../Hooks/useAuth"
 
 
 const Navbar = () => {
 
-    const { auth } = useAuth() 
+    const { auth } = useAuth()
 
     return (
-        <nav className={auth?.userName ? }>
-            <Link to="/viewPlan">View Plan</Link>
-        </nav>
+        <>{!auth.accessToken ? <></>
+            : <nav >
+                <Link to="/viewPlan">View Plan</Link>
+                <Link to="/createRecipe">Create a new recipe</Link>
+                <Link to="/generatePlan">Generate a meal plan</Link>
+            </nav>}
+        </>
     )
 }
 

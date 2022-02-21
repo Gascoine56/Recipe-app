@@ -1,6 +1,6 @@
 import './User.css'
-import { useState, useEffect, useRef} from 'react'
-import {useNavigate, useLocation} from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import useAuth from '../../Hooks/useAuth'
 import axios from 'axios'
 
@@ -37,7 +37,7 @@ const Login = () => {
                 { userName, password }
             )
             const accessToken = response.data.accessToken
-            setAuth({ userName, password, accessToken })
+            setAuth({ accessToken })
             setUserName('')
             setPassword('')
             navigate(from, { replace: true })
@@ -51,7 +51,7 @@ const Login = () => {
             else if (error.response?.status === 400) {
                 setErrMsg('One of the fields is missing')
             }
-            else{
+            else {
                 setErrMsg('Login failed')
             }
         }
@@ -89,13 +89,11 @@ const Login = () => {
             </form>
             <p>
                 Don`t have an account yet?<br />
-                {/*routerLink*/}
-                <span><a href='#'>Sign up!</a></span>
+                <Link to="/register"> Sign up! </Link>
             </p>
-            {/*Link to forgot password*/}
-            <a href='#'>
+            <Link to="/missing">
                 Forgot your password?
-            </a>
+            </Link>
         </section>)
 }
 

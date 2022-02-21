@@ -19,6 +19,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Registration />} />
         <Route path="unauthorized" element={<Unauthorized />} />
+        <Route path="missing" element={<Missing />} />
         {/*protected routes */}
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Home />} />
