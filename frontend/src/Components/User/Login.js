@@ -1,11 +1,17 @@
 import './User.css'
-import { useState, useEffect, useRef, useContext } from 'react'
-import AuthContext from '../context/AuthProvider'
+import { useState, useEffect, useRef} from 'react'
+import {useNavigate, useLocation} from 'react-router-dom'
+import useAuth from '../../Hooks/useAuth'
 import axios from 'axios'
 
 const Login = () => {
 
-    const { setAuth } = useContext(AuthContext)
+    const { setAuth } = useAuth()
+
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || "/"
+
     const userRef = useRef()
 
     const [userName, setUserName] = useState('')
@@ -34,6 +40,7 @@ const Login = () => {
             setAuth({ userName, password, accessToken })
             setUserName('')
             setPassword('')
+            navigate(from, { replace: true })
         } catch (error) {
             if (!error?.response) {
                 setErrMsg('No server response')
@@ -48,8 +55,6 @@ const Login = () => {
                 setErrMsg('Login failed')
             }
         }
-
-
     }
 
     return (
